@@ -4,7 +4,7 @@
 
 **Overview**
 
-An analysis of NHS Referral to Treatment (RTT) waiting-time data, exploring trends in waiting lists and the distribution of patients waiting for treatment. Using Python and Power IB, this project examines changes in NHS waiting times across Integrated Care Boards (ICBs) and regions, answering the ultimate question: since Labour came into government in 2024, has the government made progress towards its promise to reducing NHS waiting times?
+An analysis of NHS Referral to Treatment (RTT) waiting-time data, exploring trends in waiting lists and the distribution of patients waiting for treatment. Using Python and Power BI, this project examines changes in NHS waiting times across Integrated Care Boards (ICBs) and regions, answering the ultimate question: since Labour came into government in 2024, has the government made progress towards its promise to reducing NHS waiting times?
 
 **Methodology**
 
