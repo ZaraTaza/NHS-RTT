@@ -7,6 +7,18 @@ import requests
 from io import BytesIO
 
 # 2. Load data
+def load_month(url, period):
+    response = requests.get(url, timeout=60)
+    df = pd.read_excel(BytesIO(response.content), sheet_name='ICB', header=13)
+    df = df[df['ICB Code'] != '-']
+    df = df.drop(columns=['Unnamed: 0'])
+    df['Average (median) waiting time (in weeks)'] = pd.to_numeric(df['Average (median) waiting time (in weeks)'], errors='coerce')
+    df['92nd percentile waiting time (in weeks)'] = pd.to_numeric(df['92nd percentile waiting time (in weeks)'], errors='coerce')
+    df['Total over 18 weeks'] = df['Total number of incomplete pathways'] - df['Total within 18 weeks']
+    df['% over 18 weeks'] = (df['Total over 18 weeks'] / df['Total number of incomplete pathways'] * 100).round(2)
+    df['Period'] = period
+    return df
+
 files = [
     ("2025-04", "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/02/Incomplete-Commissioner-Apr25-XLSX-4M-revised.xlsx"),
     ("2025-05", "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/02/Incomplete-Commissioner-May25-XLSX-4M-revised.xlsx"),
@@ -56,9 +68,6 @@ icb_monthly['Pct_Over_18'] = (icb_monthly['Over_18'] / icb_monthly['Total_Waitin
 icb_monthly['Pct_Within_18'] = (icb_monthly['Within_18'] / icb_monthly['Total_Waiting'] * 100).round(2)
 
 icb_monthly.head()
-
-icb_monthly['Pct_Over_18'] = (icb_monthly['Over_18'] / icb_monthly['Total_Waiting'] * 100).round(2)
-icb_monthly['Pct_Within_18'] = (icb_monthly['Within_18'] / icb_monthly['Total_Waiting'] * 100).round(2)
 
 best_icbs = icb_monthly[icb_monthly['Period'] == '2026-03-01'].sort_values('Pct_Over_18', ascending=True)
 best_icbs[['ICB Name', 'Pct_Over_18', 'Total_Waiting']].head(10)
@@ -142,7 +151,6 @@ region_mapping = {
     'QHM': 'North East and Yorkshire',  # North East and North Cumbria
     'QOQ': 'North East and Yorkshire',  # Humber and North Yorkshire
     'QWO': 'North East and Yorkshire',  # West Yorkshire
-    'QOP': 'North East and Yorkshire',  # Greater Manchester 
     
     # North West
     'QOP': 'North West',                # Greater Manchester
