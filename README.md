@@ -23,7 +23,7 @@ In March 2026, the national average of patients seen within 18 weeks was 65.4% â
 
 National performance was largely flat between April 2025 and January 2026, hovering around 61-62%, before a sharp improvement in February and March 2026.
 
-![National performance](visuals/NHS England Waiting Lists vs Targets (April 2025 - March 2026).png)
+![National Performance](visuals/NHS-England-Waiting-Lists-vs-Targets-(April-2025---March-2026).png)
 
 **ICB Performance**
 
@@ -49,6 +49,9 @@ North East and Yorkshire were the best performing region, remaining above the 65
 
 Only 3 of 7 NHS regions (North East and Yorkshire, South West and London) met the 65% interim target by March 2026.
 
+![Regional Performance March 2026](visuals/NHS-England-Regions-Within-18-Weeks-(March-2026).png)
+
+![Regional Performance April 2025 - March 2026](visuals/NHS-England-Regions-Within-18-Weeks-(April-2025---March-2026).png)
 
 **Conclusion**
 
