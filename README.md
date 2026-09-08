@@ -36,7 +36,7 @@ In March 2026, a 21 percentage point gap exists between the best and worst perfo
 
 The worst: NHS Mid and South Essex was the worst performing ICB in England at 53.1% within 18 weeks.
 
-The Best: NHS Gloucestershire was the best performing ICB at 74.3% within 18 weeks.
+The best: NHS Gloucestershire was the best performing ICB at 74.3% within 18 weeks.
 
 ![ICB Performance March 2026](visuals/ICB-Performance-(March-2026).png)
 
