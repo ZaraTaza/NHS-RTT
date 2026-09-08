@@ -23,6 +23,8 @@ In March 2026, the national average of patients seen within 18 weeks was 65.4% â
 
 National performance was largely flat between April 2025 and January 2026, hovering around 61-62%, before a sharp improvement in February and March 2026.
 
+![National performance](visuals/NHS England Waiting Lists vs Targets (April 2025 - March 2026).png)
+
 **ICB Performance**
 
 Only 21 of 42 ICBs (50%) met the government's 65% interim target by March 2026.
