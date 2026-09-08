@@ -173,8 +173,6 @@ region_mapping = {
     # East of England
     'QH8': 'East of England',           # Mid and South Essex
     'QMM': 'East of England',           # Norfolk and Waveney
-    'QMJ': 'East of England',           # North Central London 
-    'QNX': 'East of England',           # Sussex 
     'QJG': 'East of England',           # Suffolk and North East Essex
     'QHG': 'East of England',           # Bedfordshire, Luton and Milton Keynes
     'QUE': 'East of England',           # Cambridgeshire and Peterborough
