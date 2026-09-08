@@ -18,7 +18,7 @@ Code can be found [here](code/nhs_rtt_analysis.py).
 
 **Key Findings**
 
-**National Performance**
+**1) National Performance**
 
 In March 2026, the national average of patients seen within 18 weeks was 65.4% — barely meeting the government's interim target of 65%, and far below the constitutional standard of 92%. 
 
@@ -28,7 +28,7 @@ National performance was largely flat between April 2025 and January 2026, hover
 
 ![Regional Performance March 2026](visuals/NHS-England-Regions-Within-18-Weeks-(March-2026).png)
 
-**ICB Performance**
+**2) ICB Performance**
 
 Only 21 of 42 ICBs (50%) met the government's 65% interim target by March 2026.
 
@@ -40,13 +40,13 @@ The Best: NHS Gloucestershire was the best performing ICB at 74.3% within 18 wee
 
 ![ICB Performance March 2026](visuals/ICB-Performance-(March-2026).png)
 
-**Most Improved**
+**3) Most Improved**
 
 Fortunately, every ICB improved over the year, though at vastly different rates.
 
 NHS Shropshire, Telford and Wrekin showed the largest improvement over the year — up 18.3 percentage points from 51.2% to 69.5%.
 
-**Regional Performance**
+**4) Regional Performance**
 
 East of England was the worst performing region throughout the entire year, consistently below all other regions.
 
