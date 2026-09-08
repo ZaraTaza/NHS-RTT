@@ -25,6 +25,8 @@ National performance was largely flat between April 2025 and January 2026, hover
 
 ![National Performance](visuals/NHS-England-Waiting-Lists-vs-Targets-(April-2025---March-2026).png)
 
+![Regional Performance March 2026](visuals/NHS-England-Regions-Within-18-Weeks-(March-2026).png)
+
 **ICB Performance**
 
 Only 21 of 42 ICBs (50%) met the government's 65% interim target by March 2026.
@@ -34,6 +36,8 @@ In March 2026, a 21 percentage point gap exists between the best and worst perfo
 The worst: NHS Mid and South Essex was the worst performing ICB in England at 53.1% within 18 weeks.
 
 The Best: NHS Gloucestershire was the best performing ICB at 74.3% within 18 weeks.
+
+![ICB Performance March 2026](visuals/ICB-Performance-(March-2026).png)
 
 **Most Improved**
 
@@ -49,7 +53,7 @@ North East and Yorkshire were the best performing region, remaining above the 65
 
 Only 3 of 7 NHS regions (North East and Yorkshire, South West and London) met the 65% interim target by March 2026.
 
-![Regional Performance March 2026](visuals/NHS-England-Regions-Within-18-Weeks-(March-2026).png)
+![Regional Trends](visuals/NHS-Regional-Trends.png)
 
 ![Regional Performance April 2025 - March 2026](visuals/NHS-England-Regions-Within-18-Weeks-(April-2025---March-2026).png)
 
