@@ -14,6 +14,7 @@ This report investigates the question: are NHS waiting lists coming down under t
 
 Visualisations were created using Python and Power BI - an interactive Power BI dashboard and key visualisations are attached to this report.
 
+Code can be found [here](code/nhs_rtt_analysis.py).
 
 **Key Findings**
 
