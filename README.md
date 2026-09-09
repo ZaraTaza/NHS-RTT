@@ -12,7 +12,7 @@ Data was sourced from [NHS England](https://www.england.nhs.uk/statistics/statis
 
 This report investigates the question: are NHS waiting lists coming down under the Labour government? If not, the analysis further examines whether geographical or regional factors may help explain these trends. Waiting times were compared across Integrated Care Boards (ICBs) and NHS regions to identify differences in performance and patterns across England. 
 
-Visualisations were created using Python and Power BI and are presented throughout this report.
+Visualisations were created using Python and Power BI are presented throughout this report.
 
 Code can be found [here](code/nhs_rtt_analysis.py).
 
