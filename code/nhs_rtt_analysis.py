@@ -119,7 +119,6 @@ plt.xticks(rotation=45)
 plt.legend()
 plt.tight_layout()
 plt.show()
-
 plt.savefig('national_trend.png', dpi=150, bbox_inches='tight')
 
 apr25 = icb_monthly[icb_monthly['Period'] == '2025-04-01'][['ICB Code', 'ICB Name', 'Pct_Within_18']]
@@ -253,8 +252,8 @@ plt.xlabel('Month')
 plt.xticks(rotation=45)
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
-plt.savefig('regional_trend.png', dpi=150, bbox_inches='tight')
 plt.show()
+plt.savefig('regional_trend.png', dpi=150, bbox_inches='tight')
 
 # 7. Export Results
 icb_monthly.to_csv('icb_monthly_clean.csv', index=False)
