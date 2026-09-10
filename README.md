@@ -18,9 +18,9 @@ Code can be found [here](code/nhs_rtt_analysis.py).
 
 **Key Findings**
 
-**1) National Performance**
+**1) National Average Performance**
 
-In March 2026, the national average of patients seen within 18 weeks was 65.4% — barely meeting the government's interim target of 65%, and far below the constitutional standard of 92%. 
+In March 2026, the national average across ICBs was 65.4% of patients seen within 18 weeks which barely meets the government's interim target of 65% and far below the constitutional standard of 92%. 
 
 National performance was largely flat between April 2025 and January 2026, hovering around 61-62%, before a sharp improvement in February and March 2026.
 
