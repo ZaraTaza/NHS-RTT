@@ -42,7 +42,7 @@ The best: NHS Gloucestershire was the best performing ICB at 74.3% within 18 wee
 
 **3) Most Improved**
 
-Fortunately, every ICB improved over the year, though at vastly different rates.
+Every ICB improved its proportion of patients waiting within 18 weeks over the period analysed.
 
 NHS Shropshire, Telford and Wrekin showed the largest improvement over the year — up 18.3 percentage points from 51.2% to 69.5%.
 
