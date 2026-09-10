@@ -60,8 +60,8 @@ Only 3 of 7 NHS regions (North East and Yorkshire, South West and London) met th
 
 **Conclusion**
 
-While no ICB in England is currently meeting the 92% constitutional standard, every ICB has improved its proportion of patients seen within 18 weeks over the year which stands to reason that NHS waiting times are moving in a positive direction.
+While no ICB in England is currently meeting the 92% constitutional standard, every ICB has improved its proportion of patients seen within 18 weeks over the year which may indicate that NHS waiting times are moving in a positive direction. Nationally, however, that improvement was enough only to scrape the government's 65% interim target but not comfortably clear it.
 
-However, it should be noted that this report only partially answers the question of whether NHS waiting lists are coming down under Starmer's government, as the analysis covers a one-year period from April 2025 to March 2026 rather than the full period since Labour came into power.
+It should be noted that this report only partially answers the question of whether NHS waiting lists are coming down under Starmer's government, as the analysis covers a one-year period from April 2025 to March 2026 rather than the full period since Labour came into power.
 
-Nevertheless, NHS RTT waiting lists have shown to be improving under the Labour government. Although further analysis over a longer period will be needed to determine whether this represents a sustained improvement.
+Nevertheless, the data suggests that NHS RTT waiting lists are moving in the right direction, though further analysis over a longer period will be needed to determine whether this represents a sustained improvement rather than a short-term uptick.
