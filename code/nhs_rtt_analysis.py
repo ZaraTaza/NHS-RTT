@@ -3,22 +3,33 @@
 
 # 1. Import libraries
 import pandas as pd
+import matplotlib.pyplot as plt
 import requests
 from io import BytesIO
 
-# 2. Load data
+# 2. Load, clean and validate data
 def load_month(url, period):
     response = requests.get(url, timeout=60)
+    
     df = pd.read_excel(BytesIO(response.content), sheet_name='ICB', header=13)
+
+      # Remove non-ICB rows
     df = df[df['ICB Code'] != '-']
+
+    # Remove unnecessary column
     df = df.drop(columns=['Unnamed: 0'])
+
+    # Convert waiting-time variables to numeric
     df['Average (median) waiting time (in weeks)'] = pd.to_numeric(df['Average (median) waiting time (in weeks)'], errors='coerce')
     df['92nd percentile waiting time (in weeks)'] = pd.to_numeric(df['92nd percentile waiting time (in weeks)'], errors='coerce')
+
+    # Calculate percentage over 18 weeks
     df['Total over 18 weeks'] = df['Total number of incomplete pathways'] - df['Total within 18 weeks']
     df['% over 18 weeks'] = (df['Total over 18 weeks'] / df['Total number of incomplete pathways'] * 100).round(2)
     df['Period'] = period
     return df
 
+# Load files
 files = [
     ("2025-04", "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/02/Incomplete-Commissioner-Apr25-XLSX-4M-revised.xlsx"),
     ("2025-05", "https://www.england.nhs.uk/statistics/wp-content/uploads/sites/2/2026/02/Incomplete-Commissioner-May25-XLSX-4M-revised.xlsx"),
@@ -45,13 +56,8 @@ for period, url in files:
 combined = pd.concat(all_months, ignore_index=True)
 print(f"\nDone! Total rows: {len(combined):,}")
 
-combined.to_csv('nhs_rtt_2025_26.csv', index=False)
-print("Saved!")
-
 # 3. ICB analysis
-combined = pd.read_csv('nhs_rtt_2025_26.csv')
-combined['Period'] = pd.to_datetime(combined['Period'])
-print(combined.shape)
+# Aggregate monthly waiting-time data by ICB
 
 icb_monthly = (
     combined.groupby(['ICB Name', 'ICB Code', 'Period'])
@@ -62,32 +68,36 @@ icb_monthly = (
     )
     .reset_index()
 )
-print(icb_monthly.shape)
 
+# Calculate percentages within and over 18 weeks
 icb_monthly['Pct_Over_18'] = (icb_monthly['Over_18'] / icb_monthly['Total_Waiting'] * 100).round(2)
 icb_monthly['Pct_Within_18'] = (icb_monthly['Within_18'] / icb_monthly['Total_Waiting'] * 100).round(2)
 
-icb_monthly.head()
+print(f"ICB-month observations: {len(icb_monthly):,}")
 
+# March 2026 ICB performance
+mar26 = icb_monthly[icb_monthly["Period"] == "2026-03-01"]
+
+# Best performing ICBs 
 best_icbs = icb_monthly[icb_monthly['Period'] == '2026-03-01'].sort_values('Pct_Over_18', ascending=True)
-best_icbs[['ICB Name', 'Pct_Over_18', 'Total_Waiting']].head(10)
+print(best_icbs[['ICB Name', 'Pct_Over_18', 'Total_Waiting']].head(10))
 
+# Worst performing ICBs 
 worst_icbs = icb_monthly[icb_monthly['Period'] == '2026-03-01'].sort_values('Pct_Over_18', ascending=False)
-worst_icbs[['ICB Name', 'Pct_Over_18', 'Total_Waiting']].head(10)
+print(worst_icbs[['ICB Name', 'Pct_Over_18', 'Total_Waiting']].head(10))
 
-icb_monthly.to_csv('icb_monthly_clean.csv', index=False)
-print("Saved!")
-
-print(icb_monthly.shape)
-icb_monthly.head(2)
-
-mar26 = icb_monthly[icb_monthly['Period'] == '2026-03-01']
+# Check the 65% interim target
 met_target = mar26[mar26['Pct_Within_18'] >= 65]
-print(f"{len(met_target)} out of {len(mar26)} ICBs met the 65% interim target")
 
 failed_target = mar26[mar26['Pct_Within_18'] < 65]
-failed_target[['ICB Name', 'Pct_Within_18', 'Total_Waiting']].sort_values('Pct_Within_18', ascending=True)
 
+print(f"{len(met_target)} out of {len(mar26)} ICBs met the 65% interim target")
+
+print("\nICBs below the 65% interim target:")
+
+print(failed_target[['ICB Name', 'Pct_Within_18', 'Total_Waiting']].sort_values('Pct_Within_18', ascending=True))
+
+# National monthly trend
 national_trend = icb_monthly.groupby('Period').agg(
     Avg_Pct_Within_18 = ('Pct_Within_18', 'mean'),
     Total_Waiting = ('Total_Waiting', 'sum')
@@ -96,8 +106,7 @@ national_trend = icb_monthly.groupby('Period').agg(
 print(national_trend)
 
 # 4. Visualisations for ICB analysis
-import matplotlib.pyplot as plt
-
+# National average ICB performance
 plt.figure(figsize=(12, 5))
 plt.plot(national_trend['Period'], national_trend['Avg_Pct_Within_18'], 
          marker='o', color='steelblue', linewidth=2)
@@ -120,30 +129,17 @@ mar26 = icb_monthly[icb_monthly['Period'] == '2026-03-01'][['ICB Code', 'ICB Nam
 change = apr25.merge(mar26, on='ICB Code', suffixes=('_Apr25', '_Mar26'))
 
 # Calculate the change
-change['Pct_Within_18_Mar26'] - change['Pct_Within_18_Apr25']
+change["Change"] = (change['Pct_Within_18_Mar26'] - change['Pct_Within_18_Apr25'])
 
-print(change.head())
-
-print(change.columns.tolist())
-
-change['Change'] = change['Pct_Within_18_Mar26'] - change['Pct_Within_18_Apr25']
-print(change[['ICB Code', 'ICB Name_Apr25', 'Pct_Within_18_Apr25', 'Pct_Within_18_Mar26', 'Change']].head())
-
-# Most improved
+# Most improved ICBs
 most_improved = change.sort_values('Change', ascending=False)
 print("TOP 5 MOST IMPROVED:")
 print(most_improved[['ICB Name_Apr25', 'Pct_Within_18_Apr25', 'Pct_Within_18_Mar26', 'Change']].head())
 
-# Most worsened
+# Most worsened ICBs
 most_worsened = change.sort_values('Change', ascending=True)
 print("\nTOP 5 MOST WORSENED:")
 print(most_worsened[['ICB Name_Apr25', 'Pct_Within_18_Apr25', 'Pct_Within_18_Mar26', 'Change']].head())
-
-change.to_csv('icb_change.csv', index=False)
-
-print(icb_monthly['ICB Code'].unique())
-
-print(icb_monthly[['ICB Code', 'ICB Name']].drop_duplicates().sort_values('ICB Code').to_string())
 
 # 5. Regional analysis
 region_mapping = {
@@ -203,31 +199,26 @@ region_mapping = {
     'QVV': 'South West',                # Dorset
 }
 
-# Check all 42 ICBs got mapped
+# Regional mapping
 icb_monthly['Region'] = icb_monthly['ICB Code'].map(region_mapping)
-print(icb_monthly['Region'].isna().sum(), "ICBs unmapped")
-print(icb_monthly['Region'].value_counts())
 
+# Check that all ICBs were mapped
 unmapped = icb_monthly[icb_monthly['Region'].isna()][['ICB Code', 'ICB Name']].drop_duplicates()
-print(unmapped)
+print(f"{len(unmapped)} ICBs unmapped")
 
-region_mapping['QF7'] = 'North East and Yorkshire'
-icb_monthly['Region'] = icb_monthly['ICB Code'].map(region_mapping)
-print(icb_monthly['Region'].isna().sum(), "ICBs unmapped")
-print(icb_monthly['Region'].value_counts())
+if len(unmapped) > 0:
+    print(unmapped)
 
+# Aggregate ICB data by region and month
 regional_monthly = icb_monthly.groupby(['Region', 'Period']).agg( Total_Waiting = ('Total_Waiting', 'sum'), Within_18 = ('Within_18', 'sum'), Over_18 = ('Over_18', 'sum') ).reset_index()
 
 regional_monthly['Pct_Within_18'] = (regional_monthly['Within_18'] / regional_monthly['Total_Waiting'] * 100).round(2)
 
-print(regional_monthly.head(10))
-
+# Regional performance for March 2026
 mar26_regional = regional_monthly[regional_monthly['Period'] == '2026-03-01']
-mar26_regional[['Region', 'Pct_Within_18', 'Total_Waiting']].sort_values('Pct_Within_18', ascending=False)
+print(mar26_regional[['Region', 'Pct_Within_18', 'Total_Waiting']].sort_values('Pct_Within_18', ascending=False))
 
 # 6. Visualisations for regional analysis
-import matplotlib.pyplot as plt
-
 mar26_regional_sorted = mar26_regional.sort_values('Pct_Within_18', ascending=True)
 
 plt.figure(figsize=(10, 6))
@@ -248,8 +239,7 @@ icb_monthly.to_csv('icb_monthly_clean.csv', index=False)
 regional_monthly.to_csv('regional_monthly_clean.csv', index=False)
 print("All saved!")
 
-import matplotlib.pyplot as plt
-
+# Regional performance trend
 plt.figure(figsize=(12, 6))
 
 for region in regional_monthly['Region'].unique():
@@ -263,10 +253,10 @@ plt.xlabel('Month')
 plt.xticks(rotation=45)
 plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
 plt.tight_layout()
+plt.savefig('regional_trend.png', dpi=150, bbox_inches='tight')
 plt.show()
 
-plt.savefig('regional_trend.png', dpi=150, bbox_inches='tight')
-
+# 7. Export Results
 icb_monthly.to_csv('icb_monthly_clean.csv', index=False)
 regional_monthly.to_csv('regional_monthly_clean.csv', index=False)
 change.to_csv('icb_change.csv', index=False)
